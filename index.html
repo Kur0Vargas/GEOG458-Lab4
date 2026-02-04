@@ -32,23 +32,22 @@ body { margin: 0; padding: 0; }
 
     map.on('load', () => {
 
-        // 1. Add raster tile source
         map.addSource('dark-theme', {
             type: 'raster',
-            tiles: [
-                'assets/dark-theme/{z}/{x}/{y}.png'
-            ],
+            tiles: ['assets/dark-theme/{z}/{x}/{y}.png'],
             tileSize: 256,
             minzoom: 11,
-            maxzoom: 14
+            maxzoom: 14,
+            bounds: [-122.45, 47.55, -122.25, 47.70]
         });
-
-        // 2. Add raster layer using that source
-        map.addLayer({
+        
+        map.addLayer(
+        {
             id: 'dark-theme-layer',
             type: 'raster',
             source: 'dark-theme'
-        });
+        },
+        map.getStyle().layers[map.getStyle().layers.length - 1].id
 
     });
 </script>
