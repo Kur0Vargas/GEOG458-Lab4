@@ -21,7 +21,7 @@ body { margin: 0; padding: 0; }
         container: 'map',                       
         style: 'mapbox://styles/mapbox/light-v11',
         center: [-122.335167, 47.608013],     
-        zoom: 12                                
+        zoom: 11                                
     });
    
     map.addControl(new mapboxgl.NavigationControl());  
@@ -33,7 +33,7 @@ body { margin: 0; padding: 0; }
     map.on('load', () => {
 
         // 1. Add raster tile source
-        map.addSource('dark-themes', {
+        map.addSource('dark-theme', {
             type: 'raster',
             tiles: [
                 'assets/dark-themes/{z}/{x}/{y}.png'
@@ -45,9 +45,9 @@ body { margin: 0; padding: 0; }
 
         // 2. Add raster layer using that source
         map.addLayer({
-            id: 'dark-themes-layer',
+            id: 'dark-theme-layer',
             type: 'raster',
-            source: 'dark-themes'
+            source: 'dark-theme'
         });
 
     });
