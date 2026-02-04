@@ -1,19 +1,21 @@
+<script>
 map.on('load', () => {
-  map.addSource('uw-tiles', {
+  map.addSource('dark-themes', {
     type: 'raster',
     tiles: [
-      'assets/dark-theme/{z}/{x}/{y}.png'
+      'assets/dark-themes/{z}/{x}/{y}.png'
     ],
     tileSize: 256,
     attribution: 'Map tiles designed by Bo Zhao'
   });
 
   map.addLayer({
-    id: 'uw',
+    id: 'dark-layer',
     type: 'raster',
-    source: 'uw-tiles',
+    source: 'dark-themes',
     layout: {
-      'visibility': 'none'
+      'visibility': 'visible'
     }
   });
 });
+</script>
