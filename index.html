@@ -29,6 +29,28 @@ body { margin: 0; padding: 0; }
         maxWidth: 100,
         unit: 'metric'
     }));
+
+    map.on('load', () => {
+
+        // 1. Add raster tile source
+        map.addSource('dark-themes', {
+            type: 'raster',
+            tiles: [
+                'assets/dark-themes/{z}/{x}/{y}.png'
+            ],
+            tileSize: 256,
+            minzoom: 11,
+            maxzoom: 14
+        });
+
+        // 2. Add raster layer using that source
+        map.addLayer({
+            id: 'dark-themes-layer',
+            type: 'raster',
+            source: 'dark-themes'
+        });
+
+    });
 </script>
 
 </body>
