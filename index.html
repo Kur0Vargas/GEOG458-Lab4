@@ -30,26 +30,6 @@ body { margin: 0; padding: 0; }
         unit: 'metric'
     }));
 
-    map.on('load', () => {
-
-        map.addSource('dark-theme', {
-            type: 'raster',
-            tiles: ['assets/dark-theme/{z}/{x}/{y}.png'],
-            tileSize: 256,
-            minzoom: 11,
-            maxzoom: 14,
-            bounds: [-122.45, 47.55, -122.25, 47.70]
-        });
-        
-        map.addLayer(
-        {
-            id: 'dark-theme-layer',
-            type: 'raster',
-            source: 'dark-theme'
-        },
-        map.getStyle().layers[map.getStyle().layers.length - 1].id
-
-    });
 </script>
 
 </body>
