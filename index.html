@@ -2,21 +2,42 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>GEOG458 Satellite Test Map</title>
+<title>GEOG458 Tile Toggle Map</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js"></script>
-
 <style>
 body { margin: 0; padding: 0; }
 #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+#menu {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+}
+#menu b { font-size: 16px; display: block; margin-bottom: 8px; border-bottom: 1px solid #ccc; }
+.option { display: flex; align-items: center; cursor: pointer; }
+.option input { margin-right: 10px; }
 </style>
 </head>
-
 <body>
 
 <div id="map"></div>
+
+<div id="menu">
+  <b>Seattle Themes</b>
+  <label class="option"><input type="radio" name="theme" value="none" checked> Basemap Only</label>
+  <label class="option"><input type="radio" name="theme" value="dark-layer"> Dark Theme</label>
+  <label class="option"><input type="radio" name="theme" value="satellite-layer"> Satellite</label>
+  <label class="option"><input type="radio" name="theme" value="street-layer"> Streets</label>
+  <label class="option"><input type="radio" name="theme" value="outdoors-layer"> Outdoors</label>
+</div>
 
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZjV0cWVvOCJ9.AXQlCqhl_yS9Uw4N6amrNg';
@@ -24,32 +45,36 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZ
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [-122.335, 47.635],
-  zoom: 12,
+  center: [-122.335167, 47.608013],
+  zoom: 11,
   minZoom: 11,
-  maxZoom: 13
+  maxZoom: 14
 });
+
+const themeLayers = ['dark-layer', 'satellite-layer', 'street-layer', 'outdoors-layer'];
 
 map.on('load', () => {
 
-  map.addSource('satellite-theme', {
-    type: 'raster',
-    tiles: ['assets/satellite-theme/{z}/{x}/{y}.png'],
-    tileSize: 256,
-    minzoom: 11,
-    maxzoom: 13,
-    bounds: [-122.36, 47.60, -122.31, 47.65]
-  });
+  map.addSource('dark-src', { 'type': 'raster', 'tiles': ['assets/dark-theme/{z}/{x}/{y}.png'], 'tileSize': 256 });
+  map.addSource('satellite-src', { 'type': 'raster', 'tiles': ['assets/satellite-theme/{z}/{x}/{y}.png'], 'tileSize': 256 });
+  map.addSource('street-src', { 'type': 'raster', 'tiles': ['assets/street-theme/{z}/{x}/{y}.png'], 'tileSize': 256 });
+  map.addSource('outdoors-src', { 'type': 'raster', 'tiles': ['assets/outdoors-theme/{z}/{x}/{y}.png'], 'tileSize': 256 });
 
-  map.addLayer({
-    id: 'satellite-theme-layer',
-    type: 'raster',
-    source: 'satellite-theme',
-    layout: { visibility: 'visible' }
-  });
+  map.addLayer({ id: 'dark-layer', type: 'raster', source: 'dark-src', layout: { visibility: 'none' } });
+  map.addLayer({ id: 'satellite-layer', type: 'raster', source: 'satellite-src', layout: { visibility: 'none' } });
+  map.addLayer({ id: 'street-layer', type: 'raster', source: 'street-src', layout: { visibility: 'none' } });
+  map.addLayer({ id: 'outdoors-layer', type: 'raster', source: 'outdoors-src', layout: { visibility: 'none' } });
 
+  document.querySelectorAll('input[name="theme"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      const selectedLayer = e.target.value;
+
+      themeLayers.forEach(layerId => {
+        map.setLayoutProperty(layerId, 'visibility', (layerId === selectedLayer) ? 'visible' : 'none');
+      });
+    });
+  });
 });
 </script>
-
 </body>
 </html>
