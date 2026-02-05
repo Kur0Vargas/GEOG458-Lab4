@@ -64,7 +64,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZ
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [-122.335167, 47.608013],
+  center: [-122.32, 47.62],
   zoom: 11,
   minZoom: 11,
   maxZoom: 14
@@ -86,8 +86,7 @@ map.on('load', () => {
     tiles: ['assets/satellite-theme/{z}/{x}/{y}.png'],
     tileSize: 256,
     minzoom: 11,
-    maxzoom: 13,
-    bounds: [-122.36, 47.60, -122.31, 47.65]
+    maxzoom: 13
   });
 
   map.addSource('street-theme', {
@@ -148,11 +147,11 @@ map.on('load', () => {
     });
   }
 
-  document.getElementById('noneToggle').addEventListener('change', () => showLayer(null));
-  document.getElementById('darkToggle').addEventListener('change', () => showLayer('dark-theme-layer'));
-  document.getElementById('satelliteToggle').addEventListener('change', () => showLayer('satellite-theme-layer'));
-  document.getElementById('streetToggle').addEventListener('change', () => showLayer('street-theme-layer'));
-  document.getElementById('outdoorsToggle').addEventListener('change', () => showLayer('outdoors-theme-layer'));
+  // document.getElementById('noneToggle').addEventListener('change', () => showLayer(null));
+  // document.getElementById('darkToggle').addEventListener('change', () => showLayer('dark-theme-layer'));
+  // document.getElementById('satelliteToggle').addEventListener('change', () => showLayer('satellite-theme-layer'));
+  // document.getElementById('streetToggle').addEventListener('change', () => showLayer('street-theme-layer'));
+  // document.getElementById('outdoorsToggle').addEventListener('change', () => showLayer('outdoors-theme-layer'));
 
 });
 </script>
