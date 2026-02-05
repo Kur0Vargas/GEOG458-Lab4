@@ -2,36 +2,15 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>GEOG458 Tile Toggle Map</title>
+<title>GEOG458 Satellite Test Map</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.18.1/mapbox-gl.js"></script>
 
 <style>
-body {
-  margin: 0;
-  padding: 0;
-}
-
-#map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-#menu {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
-  background: white;
-  padding: 12px;
-  border: 2px solid black;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-}
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
 </style>
 </head>
 
@@ -39,46 +18,19 @@ body {
 
 <div id="map"></div>
 
-<div id="menu">
-  <b>Tilesets</b><br><br>
-
-  <input type="radio" name="tileset" id="noneToggle" checked>
-  <label for="noneToggle">Basemap Only</label><br>
-
-  <input type="radio" name="tileset" id="darkToggle">
-  <label for="darkToggle">Dark Theme</label><br>
-
-  <input type="radio" name="tileset" id="satelliteToggle">
-  <label for="satelliteToggle">Satellite Theme</label><br>
-
-  <input type="radio" name="tileset" id="streetToggle">
-  <label for="streetToggle">Street Theme</label><br>
-
-  <input type="radio" name="tileset" id="outdoorsToggle">
-  <label for="outdoorsToggle">Outdoors Theme</label>
-</div>
-
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZjV0cWVvOCJ9.AXQlCqhl_yS9Uw4N6amrNg';
 
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [-122.335, 47.625]
-  zoom: 12
+  center: [-122.335, 47.63],
+  zoom: 12,
   minZoom: 11,
-  maxZoom: 14
+  maxZoom: 13
 });
 
 map.on('load', () => {
-
-  map.addSource('dark-theme', {
-    type: 'raster',
-    tiles: ['assets/dark-theme/{z}/{x}/{y}.png'],
-    tileSize: 256,
-    minzoom: 11,
-    maxzoom: 14
-  });
 
   map.addSource('satellite-theme', {
     type: 'raster',
@@ -86,75 +38,15 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    scheme: 'tms',
-    bounds: [-122.37, 47.59, -122.30, 47.66]
-  });
-
-  map.addSource('street-theme', {
-    type: 'raster',
-    tiles: ['assets/street-theme/{z}/{x}/{y}.png'],
-    tileSize: 256,
-    minzoom: 11,
-    maxzoom: 13,
-    scheme: 'tms',
-    bounds: [-122.37, 47.59, -122.30, 47.66]
-  });
-
-  map.addSource('outdoors-theme', {
-    type: 'raster',
-    tiles: ['assets/outdoors-theme/{z}/{x}/{y}.png'],
-    tileSize: 256,
-    minzoom: 11,
-    maxzoom: 13,
-    scheme: 'tms',
-    bounds: [-122.37, 47.59, -122.30, 47.66]
-  });
-
-  map.addLayer({
-    id: 'dark-theme-layer',
-    type: 'raster',
-    source: 'dark-theme',
-    layout: { visibility: 'none' }
+    bounds: [-122.36, 47.60, -122.31, 47.65]
   });
 
   map.addLayer({
     id: 'satellite-theme-layer',
     type: 'raster',
     source: 'satellite-theme',
-    layout: { visibility: 'none' }
+    layout: { visibility: 'visible' }
   });
-
-  map.addLayer({
-    id: 'street-theme-layer',
-    type: 'raster',
-    source: 'street-theme',
-    layout: { visibility: 'none' }
-  });
-
-  map.addLayer({
-    id: 'outdoors-theme-layer',
-    type: 'raster',
-    source: 'outdoors-theme',
-    layout: { visibility: 'none' }
-  });
-
-  function showLayer(id) {
-    const layers = [
-      'dark-theme-layer',
-      'satellite-theme-layer',
-      'street-theme-layer',
-      'outdoors-theme-layer'
-    ];
-    layers.forEach(l => {
-      map.setLayoutProperty(l, 'visibility', l === id ? 'visible' : 'none');
-    });
-  }
-
-  document.getElementById('noneToggle').addEventListener('change', () => showLayer(null));
-  document.getElementById('darkToggle').addEventListener('change', () => showLayer('dark-theme-layer'));
-  document.getElementById('satelliteToggle').addEventListener('change', () => showLayer('satellite-theme-layer'));
-  document.getElementById('streetToggle').addEventListener('change', () => showLayer('street-theme-layer'));
-  document.getElementById('outdoorsToggle').addEventListener('change', () => showLayer('outdoors-theme-layer'));
 
 });
 </script>
