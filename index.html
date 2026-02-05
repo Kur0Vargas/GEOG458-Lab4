@@ -64,8 +64,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZ
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [-122.335167, 47.608013],
-  zoom: 11,
+  center: [-122.335, 47.625]
+  zoom: 12
   minZoom: 11,
   maxZoom: 14
 });
@@ -86,7 +86,8 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    scheme: 'tms'
+    scheme: 'tms',
+    bounds: [-122.37, 47.59, -122.30, 47.66]
   });
 
   map.addSource('street-theme', {
@@ -95,7 +96,8 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    scheme: 'tms'
+    scheme: 'tms',
+    bounds: [-122.37, 47.59, -122.30, 47.66]
   });
 
   map.addSource('outdoors-theme', {
@@ -104,7 +106,8 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    scheme: 'tms'
+    scheme: 'tms',
+    bounds: [-122.37, 47.59, -122.30, 47.66]
   });
 
   map.addLayer({
