@@ -64,7 +64,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXRyYW4wMjMiLCJhIjoiY21reGhuaGJ2MGE5MzNsbmJkZ
 const map = new mapboxgl.Map({
   container: 'map',
   style: 'mapbox://styles/mapbox/light-v11',
-  center: [-122.32, 47.62],
+  center: [-122.335167, 47.608013],
   zoom: 11,
   minZoom: 11,
   maxZoom: 14
@@ -77,8 +77,7 @@ map.on('load', () => {
     tiles: ['assets/dark-theme/{z}/{x}/{y}.png'],
     tileSize: 256,
     minzoom: 11,
-    maxzoom: 14,
-    bounds: [-122.45, 47.55, -122.25, 47.70]
+    maxzoom: 14
   });
 
   map.addSource('satellite-theme', {
@@ -86,7 +85,8 @@ map.on('load', () => {
     tiles: ['assets/satellite-theme/{z}/{x}/{y}.png'],
     tileSize: 256,
     minzoom: 11,
-    maxzoom: 13
+    maxzoom: 13,
+    scheme: 'tms'
   });
 
   map.addSource('street-theme', {
@@ -95,7 +95,7 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    bounds: [-122.36, 47.60, -122.31, 47.65]
+    scheme: 'tms'
   });
 
   map.addSource('outdoors-theme', {
@@ -104,7 +104,7 @@ map.on('load', () => {
     tileSize: 256,
     minzoom: 11,
     maxzoom: 13,
-    bounds: [-122.36, 47.60, -122.31, 47.65]
+    scheme: 'tms'
   });
 
   map.addLayer({
@@ -118,7 +118,7 @@ map.on('load', () => {
     id: 'satellite-theme-layer',
     type: 'raster',
     source: 'satellite-theme',
-    layout: { visibility: 'visible' }
+    layout: { visibility: 'none' }
   });
 
   map.addLayer({
@@ -147,11 +147,11 @@ map.on('load', () => {
     });
   }
 
-  // document.getElementById('noneToggle').addEventListener('change', () => showLayer(null));
-  // document.getElementById('darkToggle').addEventListener('change', () => showLayer('dark-theme-layer'));
-  // document.getElementById('satelliteToggle').addEventListener('change', () => showLayer('satellite-theme-layer'));
-  // document.getElementById('streetToggle').addEventListener('change', () => showLayer('street-theme-layer'));
-  // document.getElementById('outdoorsToggle').addEventListener('change', () => showLayer('outdoors-theme-layer'));
+  document.getElementById('noneToggle').addEventListener('change', () => showLayer(null));
+  document.getElementById('darkToggle').addEventListener('change', () => showLayer('dark-theme-layer'));
+  document.getElementById('satelliteToggle').addEventListener('change', () => showLayer('satellite-theme-layer'));
+  document.getElementById('streetToggle').addEventListener('change', () => showLayer('street-theme-layer'));
+  document.getElementById('outdoorsToggle').addEventListener('change', () => showLayer('outdoors-theme-layer'));
 
 });
 </script>
